@@ -10,13 +10,13 @@ const clientId =
 function Login() {
   const onSuccess = (res) => {
     console.log("Login Success: currentUser:", res.profileObj);
-    alert(`Logged in successfully welcome ${res.profileObj.name}!`);
+    // alert(`Logged in successfully welcome ${res.profileObj.name}!`);
     refreshTokenSetup(res);
   };
 
   const onFailure = (res) => {
     console.log("Login failed: res:", res);
-    alert(`Failed to login.`);
+    // alert(`Failed to login.`);
   };
 
   return (
