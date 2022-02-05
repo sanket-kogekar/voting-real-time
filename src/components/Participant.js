@@ -23,6 +23,7 @@ function Participant() {
       console.log("My fetch-question ran!");
       setFirstRender(false);
     }
+    // eslint-disable-next-line
   }, []);
 
   useEffect(() => {
@@ -55,6 +56,7 @@ function Participant() {
         }
       });
     }
+    // eslint-disable-next-line
   }, [email]);
 
   const submitSelectedPollOption = () => {

@@ -26,15 +26,17 @@ function CreateVote() {
   const [voteStatus, setVoteStatus] = useState(false);
   const toast = useToast();
   const socket = useContext(SocketContext);
-  const [yesResultCount, setYesResultCount] = useState(0);
-  const [noResultCount, setNoResultCount] = useState(0);
+  // const [yesResultCount, setYesResultCount] = useState(0);
+  // const [noResultCount, setNoResultCount] = useState(0);
   const [resultList, setResultList] = useState([]);
 
   const incrementCount = (value) => {
     if (value === "YES") {
-      setYesResultCount((prevCount) => prevCount + 1);
+      // UNCOMMENT THIS BELOW
+      // setYesResultCount((prevCount) => prevCount + 1);
     } else {
-      setNoResultCount((prevCount) => prevCount + 1);
+      // UNCOMMENT THIS BELOW
+      // setNoResultCount((prevCount) => prevCount + 1);
     }
   };
 
@@ -84,14 +86,16 @@ function CreateVote() {
     socket.on("poll-selection", (pollAnswerDetails) => {
       handlePollAnswer(pollAnswerDetails);
     });
+    // eslint-disable-next-line
   }, []);
 
   const endVoting = () => {
     setVoteStatus(false);
     setQuestionValue("");
     socket.emit("start-voting", "");
-    setYesResultCount(0);
-    setNoResultCount(0);
+    // UNCOMMENT THIS BELOW
+    // setYesResultCount(0);
+    // setNoResultCount(0);
     setResultList([]);
     // resList = [];
   };
@@ -100,8 +104,9 @@ function CreateVote() {
     if (!!questionValue) {
       socket.emit("start-voting", questionValue);
       setVoteStatus(true);
-      setYesResultCount(0);
-      setNoResultCount(0);
+      // UNCOMMENT THIS BELOW
+      // setYesResultCount(0);
+      // setNoResultCount(0);
       setResultList([]);
       // resList = [];
     } else {

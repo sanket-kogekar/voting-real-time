@@ -126,7 +126,12 @@ const useAction = (state, dispatch) => {
 };
 
 const middleware = (params) => {
-  const { state, dispatch, action, extensions } = params;
+  const {
+    // state,
+    dispatch,
+    action,
+    //  extensions
+  } = params;
   switch (action.type) {
     default:
       return dispatch(action);
