@@ -13,6 +13,7 @@ import { SocketContext } from "../contexts/socket";
 import Header from "./Header";
 import format from "date-fns/format";
 import isDate from "date-fns/isDate";
+import { AppContext } from "../contexts/AppContextProvider";
 
 export function formatDate(dateString) {
   const date = new Date(dateString);
@@ -26,6 +27,9 @@ function CreateVote() {
   const [voteStatus, setVoteStatus] = useState(false);
   const toast = useToast();
   const socket = useContext(SocketContext);
+  const { state } = useContext(AppContext);
+  const { email } = state;
+
   // const [yesResultCount, setYesResultCount] = useState(0);
   // const [noResultCount, setNoResultCount] = useState(0);
   const [resultList, setResultList] = useState([]);
@@ -92,7 +96,7 @@ function CreateVote() {
   const endVoting = () => {
     setVoteStatus(false);
     setQuestionValue("");
-    socket.emit("start-voting", "");
+    socket.emit("start-voting", { question: "", email: email });
     // UNCOMMENT THIS BELOW
     // setYesResultCount(0);
     // setNoResultCount(0);
@@ -102,7 +106,7 @@ function CreateVote() {
 
   const submitQuestion = () => {
     if (!!questionValue) {
-      socket.emit("start-voting", questionValue);
+      socket.emit("start-voting", { question: questionValue, email: email });
       setVoteStatus(true);
       // UNCOMMENT THIS BELOW
       // setYesResultCount(0);
