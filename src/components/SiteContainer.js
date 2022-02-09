@@ -10,7 +10,7 @@ function SiteContainer() {
   const { state } = useContext(AppContext);
   const { email } = state;
 
-  const adminEmail = "kogekar20@gmail.com";
+  const adminEmail = "cjco.chinmay@gmail.com";
 
   // if (!email) {
   //   return <Landing />;
