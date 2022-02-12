@@ -10,7 +10,8 @@ function SiteContainer() {
   const { state } = useContext(AppContext);
   const { email } = state;
 
-  const adminEmail = "cjco.chinmay@gmail.com";
+  // const adminEmail = "cjco.chinmay@gmail.com";
+  const adminEmail = "Admin";
 
   // if (!email) {
   //   return <Landing />;
@@ -24,7 +25,7 @@ function SiteContainer() {
     <Box>
       {!email && <Landing />}
       <SocketContext.Provider value={socket}>
-        {email === adminEmail && <CreateVote />}
+        {email.toLowerCase() === adminEmail.toLowerCase() && <CreateVote />}
         {!!email && email !== adminEmail && <Participant />}
       </SocketContext.Provider>
     </Box>

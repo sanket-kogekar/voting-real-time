@@ -1,13 +1,13 @@
-import { AppContext } from "../contexts/AppContextProvider";
+// import { AppContext } from "../contexts/AppContextProvider";
 // import Landing from "./Landing";
 import { Box, HStack, Text } from "@chakra-ui/react";
-import React, { useContext } from "react";
+import React from "react";
 import LogoutHooks from "./LogoutHooks";
 
 function Header() {
   // Global state & actions
-  const { state } = useContext(AppContext);
-  const { name } = state;
+  // const { state } = useContext(AppContext);
+  // const { name } = state;
 
   return (
     <Box>
@@ -18,7 +18,11 @@ function Header() {
         pt="2"
         spacing={"3"}
       >
-        <Text fontSize={"20"}>Welcome{!!name ? `, ${name}` : ""}!</Text>
+        {/* <Text fontSize={"20"}>Welcome{!!name ? `, ${name}` : ""}!</Text> */}
+        <Box>
+          <Text fontSize={"20"}>Skool Sansad 2022</Text>
+          <Text fontSize={"20"}>Deepastambha Charitable Trust</Text>
+        </Box>
         <LogoutHooks />
       </HStack>
     </Box>

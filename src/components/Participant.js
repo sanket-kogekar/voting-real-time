@@ -20,7 +20,6 @@ function Participant() {
   useEffect(() => {
     if (firstRender) {
       socket.emit("fetch-pre-created-question");
-      console.log("My fetch-question ran!");
       setFirstRender(false);
     }
     // eslint-disable-next-line
@@ -29,7 +28,6 @@ function Participant() {
   useEffect(() => {
     if (!!email) {
       socket.on("new-question", (questionValue) => {
-        console.log("My questionValue", questionValue);
         if (!!questionValue) {
           setIsSubmitted(false);
           setPollQuestion(questionValue);
@@ -42,10 +40,6 @@ function Participant() {
       });
 
       socket.on("fetch-pre-created-question", (questionValue) => {
-        console.log(
-          "My fetch-pre-created-question questionValue",
-          questionValue
-        );
         if (!!questionValue) {
           setIsSubmitted(false);
           setPollQuestion(questionValue);
@@ -90,7 +84,7 @@ function Participant() {
         <Box justifyContent={"center"} alignItems={"center"} mt="5">
           <Stack justifyContent={"center"} alignItems={"center"} px="3" pt="3">
             <Text fontSize={"lg"} fontWeight={"bold"}>
-              Question
+              Resolution Proposed
             </Text>
             <Text fontSize={"lg"}>{pollQuestion}</Text>
           </Stack>
@@ -161,9 +155,26 @@ function Participant() {
           </HStack>
           <HStack justifyContent="center" alignItems="center" px="2" my="4">
             <Text fontSize={"lg"} fontWeight={"bold"}>
-              A question will be displayed soon!
+              A resolution will be displayed soon!
             </Text>
           </HStack>
+          {!!pollQuestion && (
+            <HStack justifyContent={"center"} alignItems={"center"} mt="4">
+              <Button
+                minW="150"
+                justifyContent={"center"}
+                alignItems={"center"}
+                mx="4"
+                my="4"
+                bg="#e0e0e0"
+                onClick={() => {
+                  setIsSubmitted(false);
+                }}
+              >
+                Go Back To Change Response?
+              </Button>
+            </HStack>
+          )}
         </Box>
       )}
     </Box>

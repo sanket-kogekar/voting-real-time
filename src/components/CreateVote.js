@@ -14,6 +14,7 @@ import Header from "./Header";
 import format from "date-fns/format";
 import isDate from "date-fns/isDate";
 import { AppContext } from "../contexts/AppContextProvider";
+import UseEmail from "./UseEmail";
 
 export function formatDate(dateString) {
   const date = new Date(dateString);
@@ -30,9 +31,17 @@ function CreateVote() {
   const { state } = useContext(AppContext);
   const { email } = state;
 
+  const [lastQuestionResult, setLastQuestionResult] = useState(null);
+
   // const [yesResultCount, setYesResultCount] = useState(0);
   // const [noResultCount, setNoResultCount] = useState(0);
   const [resultList, setResultList] = useState([]);
+  const {
+    //loading, submitted, error,
+    sendEmail,
+  } = UseEmail(
+    "https://public.herotofu.com/v1/fb5a3d70-89d4-11ec-9849-fb4467695b96"
+  );
 
   const incrementCount = (value) => {
     if (value === "YES") {
@@ -94,6 +103,14 @@ function CreateVote() {
   }, []);
 
   const endVoting = () => {
+    let voteResult = {
+      question: questionValue,
+      yesCount: getCount(resultList, "YES"),
+      noCount: getCount(resultList, "NO"),
+      logs: resultList,
+    };
+    setLastQuestionResult(voteResult);
+    sendEmail({ ...voteResult, logs: JSON.stringify(voteResult.logs) });
     setVoteStatus(false);
     setQuestionValue("");
     socket.emit("start-voting", { question: "", email: email });
@@ -112,10 +129,11 @@ function CreateVote() {
       // setYesResultCount(0);
       // setNoResultCount(0);
       setResultList([]);
+      setLastQuestionResult(null);
       // resList = [];
     } else {
       toast({
-        title: "Please enter question",
+        title: "Please enter the resolution",
         duration: 1500,
         status: "error",
       });
@@ -168,37 +186,97 @@ function CreateVote() {
     <Box>
       <Header />
       {!voteStatus ? (
-        <Box justifyContent={"center"} alignItems={"center"} mt="5">
-          <Textarea
-            variant="outline"
-            placeholder="Please enter your question"
-            value={questionValue}
-            onChange={(e) => {
-              setQuestionValue(e.target.value);
-            }}
-            px="4"
-            py="4"
-          />
-          <HStack justifyContent={"center"} alignItems={"center"}>
-            <Button
-              minW="150"
+        <>
+          <Box justifyContent={"center"} alignItems={"center"} mt="5">
+            <Textarea
+              variant="outline"
+              placeholder="Please enter the resolution"
+              value={questionValue}
+              onChange={(e) => {
+                setQuestionValue(e.target.value);
+              }}
+              px="4"
+              py="4"
+            />
+            <HStack justifyContent={"center"} alignItems={"center"}>
+              <Button
+                minW="150"
+                justifyContent={"center"}
+                alignItems={"center"}
+                mx="4"
+                my="4"
+                align
+                onClick={() => submitQuestion()}
+                bg="#e0e0e0"
+              >
+                Start Voting
+              </Button>
+            </HStack>
+          </Box>
+          {!!lastQuestionResult && (
+            <Box
               justifyContent={"center"}
               alignItems={"center"}
-              mx="4"
-              my="4"
-              align
-              onClick={() => submitQuestion()}
-              bg="#e0e0e0"
+              mt="10"
+              bg="#ecf0f1"
             >
-              Start Voting
-            </Button>
-          </HStack>
-        </Box>
+              <Stack
+                justifyContent={"center"}
+                alignItems={"center"}
+                px="3"
+                pt="3"
+              >
+                <Text fontSize={"lg"} fontWeight={"bold"}>
+                  Last Resolution Result:
+                </Text>
+                <Text fontSize={"lg"}>{lastQuestionResult.question}</Text>
+              </Stack>
+              <Box mt="4">
+                <Box borderBottomWidth={"2px"} pb="3">
+                  <HStack justifyContent="center" alignItems="center" px="2">
+                    <Button
+                      // bg={"#e0e0e0"}
+                      variant="solid"
+                      borderRadius={10}
+                      minH="10"
+                      minW="150px"
+                      fontSize={"sm"}
+                      color="black"
+                      _hover={{ textDecor: "none" }}
+                      // borderColor={"rgba(66, 153, 225, 0.6)"}
+                      borderColor={"#707070"}
+                      borderWidth={"3px"}
+                      colorScheme="whiteAlpha"
+                    >
+                      YES {`(${lastQuestionResult.yesCount})`}
+                    </Button>
+                    <Button
+                      // bg={"#e0e0e0"}
+                      color="black"
+                      variant="solid"
+                      minH="10"
+                      minW="150px"
+                      borderRadius={10}
+                      fontSize={"sm"}
+                      _hover={{ textDecor: "none" }}
+                      // borderColor={"rgba(66, 153, 225, 0.6)"}
+                      borderColor={"#707070"}
+                      borderWidth={"3px"}
+                      colorScheme="whiteAlpha"
+                    >
+                      NO {`(${lastQuestionResult.noCount})`}
+                    </Button>
+                  </HStack>
+                </Box>
+              </Box>
+            </Box>
+          )}
+        </>
       ) : (
         <Box justifyContent={"center"} alignItems={"center"} mt="5">
           <Stack justifyContent={"center"} alignItems={"center"} px="3" pt="3">
             <Text fontSize={"lg"} fontWeight={"bold"}>
-              Question:
+              Resolution Proposed:
             </Text>
             <Text fontSize={"lg"}>{questionValue}</Text>
           </Stack>
@@ -297,7 +375,7 @@ function CreateVote() {
                   borderColor={"#707070"}
                   py="3"
                 >
-                  <HStack justifyContent={"center"} alignItems={"center"}>
+                  {/* <HStack justifyContent={"center"} alignItems={"center"}>
                     <Text fontSize={"14px"} fontWeight={600}>
                       {item.name} ({item.email})
                     </Text>
@@ -305,6 +383,16 @@ function CreateVote() {
                   <HStack justifyContent={"center"} alignItems={"center"}>
                     <Text fontSize={"14px"} fontWeight={600}>
                       voted {item.pollAnswer} on {formatDate(item.time)}
+                    </Text>
+                  </HStack> */}
+                  <HStack justifyContent={"center"} alignItems={"center"}>
+                    <Text fontSize={"14px"} fontWeight={600}>
+                      {item.email} voted {item.pollAnswer}
+                    </Text>
+                  </HStack>
+                  <HStack justifyContent={"center"} alignItems={"center"}>
+                    <Text fontSize={"14px"} fontWeight={600}>
+                      on {formatDate(item.time)}
                     </Text>
                   </HStack>
                 </Stack>
