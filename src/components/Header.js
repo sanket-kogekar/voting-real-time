@@ -20,8 +20,8 @@ function Header() {
       >
         {/* <Text fontSize={"20"}>Welcome{!!name ? `, ${name}` : ""}!</Text> */}
         <Box>
-          <Text fontSize={"20"}>Skool Sansad 2022</Text>
-          <Text fontSize={"20"}>Deepastambha Charitable Trust</Text>
+          <Text fontSize={"18"}>Skool Sansad 2022</Text>
+          <Text fontSize={"18"}>Deepastambha Charitable Trust</Text>
         </Box>
         <LogoutHooks />
       </HStack>

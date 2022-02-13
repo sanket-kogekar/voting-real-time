@@ -187,7 +187,7 @@ function CreateVote() {
       <Header />
       {!voteStatus ? (
         <>
-          <Box justifyContent={"center"} alignItems={"center"} mt="5">
+          <Box justifyContent={"center"} alignItems={"center"} mt="8">
             <Textarea
               variant="outline"
               placeholder="Please enter the resolution"

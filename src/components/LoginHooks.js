@@ -188,6 +188,7 @@ function LoginHooks() {
         py="4"
         bg="white"
         my="2"
+        borderColor={"#92a8d1"}
       />
       <Input
         variant="outline"
@@ -197,6 +198,7 @@ function LoginHooks() {
         onChange={(e) => {
           setMyName(e.target.value);
         }}
+        borderColor={"#92a8d1"}
         px="4"
         py="4"
         bg="white"
