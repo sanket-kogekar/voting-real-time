@@ -182,7 +182,7 @@ function Participant() {
               </Button>
             </HStack>
           )}
-          {!!resultObject && (
+          {!pollQuestion && !!resultObject && (
             <Box
               justifyContent={"center"}
               alignItems={"center"}

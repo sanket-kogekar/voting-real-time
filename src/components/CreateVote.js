@@ -115,7 +115,7 @@ function CreateVote() {
     setQuestionValue("");
     socket.emit("start-voting", { question: "", email: email });
     // sending result
-    socket.emit("share-result", {
+    socket.emit("share-results", {
       question: voteResult.question,
       yesCount: voteResult.yesCount,
       noCount: voteResult.noCount,
