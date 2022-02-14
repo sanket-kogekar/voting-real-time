@@ -114,6 +114,12 @@ function CreateVote() {
     setVoteStatus(false);
     setQuestionValue("");
     socket.emit("start-voting", { question: "", email: email });
+    // sending result
+    socket.emit("share-result", {
+      question: voteResult.question,
+      yesCount: voteResult.yesCount,
+      noCount: voteResult.noCount,
+    });
     // UNCOMMENT THIS BELOW
     // setYesResultCount(0);
     // setNoResultCount(0);

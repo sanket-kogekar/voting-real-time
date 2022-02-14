@@ -14,6 +14,7 @@ function Participant() {
   const [pollQuestion, setPollQuestion] = useState("");
   const [isSubmitted, setIsSubmitted] = useState(false);
   const toast = useToast();
+  const [resultObject, setResultObject] = useState(null);
 
   const [firstRender, setFirstRender] = useState(true);
 
@@ -37,6 +38,7 @@ function Participant() {
           setPollQuestion("");
           setPollAnswer("");
         }
+        setResultObject(null);
       });
 
       socket.on("fetch-pre-created-question", (questionValue) => {
@@ -48,6 +50,11 @@ function Participant() {
           setPollQuestion("");
           setPollAnswer("");
         }
+        setResultObject(null);
+      });
+
+      socket.on("last-vote-results", (resultObject) => {
+        setResultObject(resultObject);
       });
     }
     // eslint-disable-next-line
@@ -174,6 +181,64 @@ function Participant() {
                 Go Back To Change Response?
               </Button>
             </HStack>
+          )}
+          {!!resultObject && (
+            <Box
+              justifyContent={"center"}
+              alignItems={"center"}
+              mt="10"
+              bg="#ecf0f1"
+            >
+              <Stack
+                justifyContent={"center"}
+                alignItems={"center"}
+                px="3"
+                pt="3"
+              >
+                <Text fontSize={"lg"} fontWeight={"bold"}>
+                  Last Resolution Result:
+                </Text>
+                <Text fontSize={"lg"}>{resultObject.question}</Text>
+              </Stack>
+              <Box mt="4">
+                <Box borderBottomWidth={"2px"} pb="3">
+                  <HStack justifyContent="center" alignItems="center" px="2">
+                    <Button
+                      // bg={"#e0e0e0"}
+                      variant="solid"
+                      borderRadius={10}
+                      minH="10"
+                      minW="150px"
+                      fontSize={"sm"}
+                      color="black"
+                      _hover={{ textDecor: "none" }}
+                      // borderColor={"rgba(66, 153, 225, 0.6)"}
+                      borderColor={"#707070"}
+                      borderWidth={"3px"}
+                      colorScheme="whiteAlpha"
+                    >
+                      YES {`(${resultObject.yesCount})`}
+                    </Button>
+                    <Button
+                      // bg={"#e0e0e0"}
+                      color="black"
+                      variant="solid"
+                      minH="10"
+                      minW="150px"
+                      borderRadius={10}
+                      fontSize={"sm"}
+                      _hover={{ textDecor: "none" }}
+                      // borderColor={"rgba(66, 153, 225, 0.6)"}
+                      borderColor={"#707070"}
+                      borderWidth={"3px"}
+                      colorScheme="whiteAlpha"
+                    >
+                      NO {`(${resultObject.noCount})`}
+                    </Button>
+                  </HStack>
+                </Box>
+              </Box>
+            </Box>
           )}
         </Box>
       )}
