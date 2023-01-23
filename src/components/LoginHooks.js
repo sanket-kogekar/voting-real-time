@@ -108,7 +108,7 @@ const USERS = [
   },
   {
     email: "Admin",
-    password: "SS2022#Admin",
+    password: "SS2023#Admin",
   },
 ];
 
