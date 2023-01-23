@@ -5,7 +5,8 @@ import socketio from "socket.io-client";
 //process.env.SOCKET_URL
 
 // const SOCKET_URL = "http://localhost:5000";
-const SOCKET_URL = "https://easy-voting.herokuapp.com";
+// const SOCKET_URL = "https://easy-voting.herokuapp.com";
+const SOCKET_URL = "https://voting.deta.dev/";
 
 export const socket = socketio.connect(SOCKET_URL);
 export const SocketContext = createContext();
