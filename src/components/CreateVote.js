@@ -14,7 +14,7 @@ import Header from "./Header";
 import format from "date-fns/format";
 import isDate from "date-fns/isDate";
 import { AppContext } from "../contexts/AppContextProvider";
-import UseEmail from "./UseEmail";
+// import UseEmail from "./UseEmail";
 
 export function formatDate(dateString) {
   const date = new Date(dateString);
