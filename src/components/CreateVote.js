@@ -110,7 +110,7 @@ function CreateVote() {
       logs: resultList,
     };
     setLastQuestionResult(voteResult);
-    sendEmail({ ...voteResult, logs: JSON.stringify(voteResult.logs) });
+    // sendEmail({ ...voteResult, logs: JSON.stringify(voteResult.logs) });
     setVoteStatus(false);
     setQuestionValue("");
     socket.emit("start-voting", { question: "", email: email });
