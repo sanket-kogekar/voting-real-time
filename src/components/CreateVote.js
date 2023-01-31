@@ -36,12 +36,12 @@ function CreateVote() {
   // const [yesResultCount, setYesResultCount] = useState(0);
   // const [noResultCount, setNoResultCount] = useState(0);
   const [resultList, setResultList] = useState([]);
-  const {
-    //loading, submitted, error,
-    sendEmail,
-  } = UseEmail(
-    "https://public.herotofu.com/v1/fb5a3d70-89d4-11ec-9849-fb4467695b96"
-  );
+  // const {
+  //   //loading, submitted, error,
+  //   sendEmail,
+  // } = UseEmail(
+  //   "https://public.herotofu.com/v1/fb5a3d70-89d4-11ec-9849-fb4467695b96"
+  // );
 
   const incrementCount = (value) => {
     if (value === "YES") {
